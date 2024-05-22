@@ -21,6 +21,10 @@ export class UserService {
     return this._users.asObservable();
   }
 
+  userById(id: number) {
+    return this.dataStore.users.find(x => x.id == id);
+  }
+
   loadAll() {
     // Hardcode the user data
     const hardcodedUsers: User[] = [
