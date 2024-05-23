@@ -10,17 +10,26 @@ import { UserService } from '../../services/user.service';
 })
 export class MainContentComponent implements OnInit {
 
-  user?: User;
+  user?: User | null;
   constructor(
     private route: ActivatedRoute,
-    private service: UserService
-  ) { }
+    private service: UserService) { }
 
   ngOnInit() {
     // Get the id from the route
     this.route.params.subscribe(params => { // Subscribe to the params object
-      const id = params['id'];  // Extract id parameter from the params object
-      this.user = this.service.userById(id);  // Assign the User object returned by userById to the user property
+      let id = params['id'];  // Extract id parameter from the params object
+      if (!id) id = 1; // If id is undefined, set it to 1
+      this.user = null;
+      this.service.users.subscribe(users => {
+        if (users.length == 0) return;
+
+        // Wait 500ms before assigning the user
+        setTimeout(() => {
+          // Assign the User object returned by userId to the user
+          this.user = this.service.userById(id);
+        }, 500)
+      })
     });
   }
 
