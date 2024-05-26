@@ -21,6 +21,14 @@
     </mat-form-field>
     <br>
 
+    <mat-form-field>
+      <mat-label>Born</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="user.birthDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Bio</mat-label>
       <textarea matInput [(ngModel)]="user.bio"></textarea>
