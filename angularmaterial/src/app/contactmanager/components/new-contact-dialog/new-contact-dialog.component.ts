@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-new-contact-dialog',
@@ -16,7 +17,9 @@ export class NewContactDialogComponent implements OnInit {
 
   user!: User;
 
-  constructor(private dialogRef: MatDialogRef<NewContactDialogComponent>) { }
+  constructor(
+    private dialogRef: MatDialogRef<NewContactDialogComponent>,
+    private userService: UserService) { }
 
   name = new FormControl('', [Validators.required]);
 
@@ -29,7 +32,13 @@ export class NewContactDialogComponent implements OnInit {
   }
 
   save() {
-    this.dialogRef.close(this.user);
+    // Use '??' to assign 'name.value' or '' to avoid error
+    this.user.name = this.name.value ?? '';
+
+    // Call 'addUser' method from 'user.service.ts' to add user to the database
+    this.userService.addUser(this.user).then(user => {
+      this.dialogRef.close(user);
+    });
   }
 
   dismiss() {
