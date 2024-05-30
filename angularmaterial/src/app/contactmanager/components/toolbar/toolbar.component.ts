@@ -12,8 +12,10 @@ import { NewContactDialogComponent } from '../new-contact-dialog/new-contact-dia
 export class ToolbarComponent implements OnInit {
 
   @Output() toggleSidenav = new EventEmitter<void>(); // Expose toggleSidenav for SidenavComponent to listen to
+  @Output() toggleTheme = new EventEmitter<void>(); // Expose toggleTheme
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router) { }
 
